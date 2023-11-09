@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import LeaveCard from "./components/LeaveCard";
 import { Box } from "@mui/material";
 import axios from "axios";
+import { APICall } from "./services/fetchData";
+import WhosOnLeave from "./components/WhosOnLeave";
 
 const data = [
   { type: "Casual Leave", available: 4, used: 6, colorPie: "text-[#AE83CA]" },
@@ -17,21 +19,35 @@ const data = [
   { type: "Unpaid Leave", available: 10, used: 0, colorPie: "text-[#7872DC]" },
   { type: "Half Leave", available: 5, used: 1, colorPie: "text-[#5045A1]" },
 ];
-
+export interface LeaveType {
+  available: number;
+  used: number;
+}
 export default function Home() {
-  const [post, setPost] = useState<any>({
-    available: 0,
-    used: 0,
-  });
+  const [post, setPost] = useState<any>();
   useEffect(() => {
-    // const data = APICall();
-    // console.log(data);
-    axios.get("http://localhost:8080/leave/casual_leave").then((response) =>
-      setPost({
-        available: response.data.data.available,
-        used: response.data.data.usedLeaves,
-      })
-    );
+    const fetchData = async () => {
+      const data = await APICall({ url: "/casual_leave" });
+      console.log(data);
+    };
+    //   const leaveTypes = [
+    //     "casual_leave",
+    //     "sick_leave",
+    //     "earned_leave",
+    //     "adjustment_leave",
+    //     "unpaid_leave",
+    //     "half_leave",
+    //   ];
+
+    //   const apiCalls = leaveTypes.map(async (type) => {
+    //     const data = await APICall({ url: type });
+    //     return { [type]: data };
+    //   });
+    //   const results = await Promise.all(apiCalls);
+    //   setPost(results);
+    // };
+
+    fetchData();
   }, []);
   console.log(post);
   return (
@@ -42,13 +58,16 @@ export default function Home() {
             return (
               <LeaveCard
                 type={item.type}
-                available={post.available}
-                used={post.used}
+                available={item.available}
+                used={item.used}
                 colorPie={item.colorPie}
                 key={i}
               />
             );
           })}
+        </Box>
+        <Box>
+          <WhosOnLeave />
         </Box>
       </Box>
     </>
