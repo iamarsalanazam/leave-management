@@ -1,10 +1,14 @@
 import axios from "axios";
-import { useState } from "react";
-
-export const APICall = async () => {
-  const [post, setPost] = useState(null);
-  axios
-    .get("https://jsonplaceholder.typicode.com/posts/1")
-    .then((response) => setPost(response.data));
-  return post;
+type FetchingData = {
+  url: string;
+};
+export const APICall = async ({ url }: FetchingData) => {
+  const baseUrl = "http://localhost:8080/leave";
+  try {
+    const response = await axios.get(`${baseUrl}${url}`);
+    return response.data.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return null;
+  }
 };
