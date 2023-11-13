@@ -5,66 +5,58 @@ import { Box } from "@mui/material";
 import axios from "axios";
 import { APICall } from "./services/fetchData";
 import WhosOnLeave from "./components/WhosOnLeave";
-
-const data = [
-  { type: "Casual Leave", available: 4, used: 6, colorPie: "text-[#AE83CA]" },
-  { type: "Sick Leave", available: 5, used: 1, colorPie: "text-[#7A98CA]" },
-  { type: "Earned Leave", available: 2, used: 8, colorPie: "text-[#76BB7E]" },
-  {
-    type: "Adjustment Leave",
-    available: 3,
-    used: 2,
-    colorPie: "text-[#FE5889]",
-  },
-  { type: "Unpaid Leave", available: 10, used: 0, colorPie: "text-[#7872DC]" },
-  { type: "Half Leave", available: 5, used: 1, colorPie: "text-[#5045A1]" },
+import CircularIndeterminate from "./components/Loader";
+const colorPieType = [
+  { type: "Casual Leave", colorPie: "text-[#AE83CA]" },
+  { type: "Sick Leave", colorPie: "text-[#7A98CA]" },
+  { type: "Earned Leave", colorPie: "text-[#76BB7E]" },
+  { type: "Adjustment Leave", colorPie: "text-[#FE5889]" },
+  { type: "Unpaid Leave", colorPie: "text-[#7872DC]" },
+  { type: "Half Leaves", colorPie: "text-[#5045A1]" },
 ];
 export interface LeaveType {
   available: number;
   used: number;
 }
 export default function Home() {
-  const [post, setPost] = useState<any>();
+  const [get, setGet] = useState<any>([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const fetchData = async () => {
-      const data = await APICall({ url: "/casual_leave" });
-      console.log(data);
+      try {
+        const data1 = await APICall({ url: "/casual_leave" });
+        const data2 = await APICall({ url: "/sick_leave" });
+        const data3 = await APICall({ url: "/earned_leave" });
+        const data4 = await APICall({ url: "/adjustment_leave" });
+        const data5 = await APICall({ url: "/unpaid_leave" });
+        const data6 = await APICall({ url: "/half_leave" });
+        setGet([data1, data2, data3, data4, data5, data6]);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
     };
-    //   const leaveTypes = [
-    //     "casual_leave",
-    //     "sick_leave",
-    //     "earned_leave",
-    //     "adjustment_leave",
-    //     "unpaid_leave",
-    //     "half_leave",
-    //   ];
-
-    //   const apiCalls = leaveTypes.map(async (type) => {
-    //     const data = await APICall({ url: type });
-    //     return { [type]: data };
-    //   });
-    //   const results = await Promise.all(apiCalls);
-    //   setPost(results);
-    // };
-
     fetchData();
   }, []);
-  console.log(post);
   return (
     <>
       <Box className="h-screen bg-gray-100">
-        <Box className="flex justify-center items-center bg-gray-100">
-          {data.map((item, i) => {
-            return (
+        <Box className="flex justify-center items-center bg-gray-100 h-44">
+          {loading ? (
+            <CircularIndeterminate />
+          ) : (
+            get.map((item: any, i: number) => (
               <LeaveCard
-                type={item.type}
-                available={item.available}
-                used={item.used}
-                colorPie={item.colorPie}
+                type={colorPieType[i].type}
+                available={Math.abs(item.available)}
+                used={item.usedLeaves}
+                colorPie={colorPieType[i].colorPie}
                 key={i}
               />
-            );
-          })}
+            ))
+          )}
         </Box>
         <Box>
           <WhosOnLeave />
