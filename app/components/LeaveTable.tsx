@@ -8,23 +8,6 @@ import Paper from "@mui/material/Paper";
 import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import { APICall } from "../services/fetchData";
-function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number
-) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
 
 export default function LeaveTable() {
   const [get, setGet] = useState<any>([]);
@@ -42,9 +25,8 @@ export default function LeaveTable() {
     };
     fetchData();
   }, []);
-  console.log(get);
   return (
-    <TableContainer component={Paper} className="w-3/4 m-1 rounded-xl h-96">
+    <TableContainer component={Paper} className="w-full rounded-xl h-[65%]">
       <Box className="p-4 border-b-2 border-grey-400">
         <h2 className="text-gray-600 font-bold">Leave Request</h2>
       </Box>
