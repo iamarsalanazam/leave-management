@@ -1,6 +1,6 @@
-import { Box, useForkRef } from "@mui/material";
+import { Box } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
-import FormControl, { useFormControl } from "@mui/material/FormControl";
+import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useEffect, useState } from "react";
 import { APICall } from "../services/fetchData";
@@ -55,7 +55,7 @@ function WhosOnLeave() {
   }, []);
   return (
     <>
-      <Box className="border border-grey-900 border-solid rounded-xl bg-white w-1/4 h-96">
+      <Box className="border border-grey-900 border-solid rounded-xl bg-white w-1/4 h-96 m-1">
         <Box className="p-4 border-b-2 border-grey-400">
           <h2 className="text-gray-600 font-bold">Who's On Leave?</h2>
         </Box>

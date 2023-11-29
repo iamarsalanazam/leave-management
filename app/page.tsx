@@ -6,6 +6,7 @@ import axios from "axios";
 import { APICall } from "./services/fetchData";
 import WhosOnLeave from "./components/WhosOnLeave";
 import CircularIndeterminate from "./components/Loader";
+import LeaveTable from "./components/LeaveTable";
 const colorPieType = [
   { type: "Casual Leave", colorPie: "text-[#AE83CA]" },
   { type: "Sick Leave", colorPie: "text-[#7A98CA]" },
@@ -25,13 +26,8 @@ export default function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data1 = await APICall({ url: "/casual_leave" });
-        const data2 = await APICall({ url: "/sick_leave" });
-        const data3 = await APICall({ url: "/earned_leave" });
-        const data4 = await APICall({ url: "/adjustment_leave" });
-        const data5 = await APICall({ url: "/unpaid_leave" });
-        const data6 = await APICall({ url: "/half_leave" });
-        setGet([data1, data2, data3, data4, data5, data6]);
+        const data1 = await APICall({ url: "/leave_details" });
+        setGet(data1);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -49,8 +45,8 @@ export default function Home() {
           ) : (
             get.map((item: any, i: number) => (
               <LeaveCard
-                type={colorPieType[i].type}
-                available={Math.abs(item.available)}
+                type={item.leaveType}
+                available={item.available}
                 used={item.usedLeaves}
                 colorPie={colorPieType[i].colorPie}
                 key={i}
@@ -58,7 +54,8 @@ export default function Home() {
             ))
           )}
         </Box>
-        <Box>
+        <Box className="flex">
+          <LeaveTable />
           <WhosOnLeave />
         </Box>
       </Box>
