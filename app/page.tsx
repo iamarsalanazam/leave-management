@@ -10,6 +10,8 @@ import LeaveTable from "./components/LeaveTable";
 import Celebrations from "./components/celebrations";
 import Announcements from "./components/Announcements";
 import HourglassTopIcon from "@mui/icons-material/HourglassTop";
+import Login from "./login/page";
+import Signup from "./signup/page";
 const colorPieType = [
   { type: "Casual Leave", colorPie: "text-[#AE83CA]" },
   { type: "Sick Leave", colorPie: "text-[#7A98CA]" },
