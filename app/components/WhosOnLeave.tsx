@@ -41,7 +41,8 @@ function WhosOnLeave() {
       setLoading(true);
       setSelected(event.target.value);
       const selectedData = await APICall({
-        url: `?date=${event.target.value}`,
+        url: `leave?date=${event.target.value}`,
+        method: "GET",
       });
       setData(selectedData.stats);
     } catch (error) {
@@ -55,7 +56,7 @@ function WhosOnLeave() {
   }, []);
   return (
     <>
-      <Box className="border border-grey-900 border-solid rounded-xl bg-white w-full h-[50%]">
+      <Box className="border border-grey-900 border-solid rounded-xl bg-white w-full h-[50%] overflow-hidden">
         <Box className="p-4 border-b-2 border-grey-400">
           <h2 className="text-gray-600 font-bold">Who's On Leave?</h2>
         </Box>
@@ -86,7 +87,7 @@ function WhosOnLeave() {
             </Select>
           </FormControl>
         </Box>
-        <Box className="p-4 overflow-auto h-64">
+        <Box className="p-4 overflow-auto h-52">
           {loading ? (
             <Variants />
           ) : (

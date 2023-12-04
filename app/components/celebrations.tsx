@@ -40,7 +40,8 @@ function Celebrations() {
       setLoading(true);
       setSelected(event.target.value);
       const selectedData = await APICall({
-        url: `?date=month`,
+        url: `leave?date=month`,
+        method: "GET",
       });
       setData(selectedData.stats);
     } catch (error) {
@@ -59,7 +60,7 @@ function Celebrations() {
         <Box className="p-4 border-b-2 border-grey-400">
           <h2 className="text-gray-600 font-bold">Celebrations this month</h2>
         </Box>
-        <Box className="p-4 overflow-auto h-72">
+        <Box className="p-4 overflow-auto h-60">
           {loading ? (
             <Variants />
           ) : (

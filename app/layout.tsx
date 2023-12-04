@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import SideBar from "./components/sideBar";
+import Header from "./components/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,8 +19,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body suppressHydrationWarning={true}>
-        {/* <SideBar /> */}
-        <main>{children}</main>
+        <div className="flex justify-between">
+          <div className="w-[15%]">
+            <SideBar />
+          </div>
+          <div className="w-[85%]">
+            <Header />
+            <div>{children}</div>
+          </div>
+        </div>
       </body>
     </html>
   );

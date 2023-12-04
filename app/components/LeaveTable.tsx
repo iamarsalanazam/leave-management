@@ -15,7 +15,7 @@ export default function LeaveTable() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data1 = await APICall({ url: "/" });
+        const data1 = await APICall({ url: "/", method: "GET" });
         setGet(data1.stats);
       } catch (error) {
         console.error("Error fetching data:", error);

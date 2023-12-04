@@ -14,11 +14,9 @@ function SideBar() {
     <Box>
       <Drawer
         variant="permanent"
-        // PaperProps={
-        //   {
-        //     //   sx: { width: "25%" },
-        //   }
-        // }
+        PaperProps={{
+          sx: { width: "15%" },
+        }}
       >
         <Box className="pl-4 my-8">
           <DashboardIcon sx={{ color: "blue" }} />
